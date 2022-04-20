@@ -1,0 +1,30 @@
+
+.profile-header {
+    position: relative;
+    overflow: hidden
+}
+
+
+.profile-header-img {
+    float: left;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+.profile-header-img img {
+    max-width: 100%
+}
+
+.profile-header-info h4 {
+    font-weight: 500;
+}
+
+.profile-header-img+.profile-header-info {
+    margin-left: 140px
+}
+
+.profile-header .profile-header-content,
+.profile-header .profile-header-tab {
+    position: relative
+}
