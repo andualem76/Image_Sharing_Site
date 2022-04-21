@@ -29,16 +29,16 @@ ob_start();
 
                             <div class="container notify_upload pt-4 ">
                                 <?php
-if (isset($_SESSION['upload'])) {
-    ?>
+                                        if (isset($_SESSION['upload'])) {
+                                            ?>
                                 <p class=<?php echo $_SESSION['color']; ?>>
                                     <?php
-echo $_SESSION['upload'];
-    ?>
+                                        echo $_SESSION['upload'];
+                                            ?>
                                 </p>
                                 <?php unset($_SESSION['upload']);
-}
-?>
+                                        }
+                                        ?>
                             </div>
 
                         </div>
@@ -56,12 +56,12 @@ echo $_SESSION['upload'];
                                 <input type="submit" name="submit">
                             </form>
                             <?php
-if (isset($_POST['submit'])) {
-//check if form was submitted
+                            if (isset($_POST['submit'])) {
+                            //check if form was submitted
 
-    include 'upload.php';
-}
-?>
+                                include 'upload.php';
+                            }
+                            ?>
                         </div>
 
                         <!-- END profile-header-content -->
@@ -87,33 +87,33 @@ if (isset($_POST['submit'])) {
 <div class="container big pt-3">
 
     <?php
-// Include the database configuration file
-include '../api/dbConfig.php';
+            // Include the database configuration file
+            include '../api/dbConfig.php';
 
-// Get images from the database
-$query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
+            // Get images from the database
+            $query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
 
-if ($query->num_rows > 0) {
-    ?><div class="images_list"><?php
-while ($row = $query->fetch_assoc()) {
-        $imageURL = '../uploads/' . $row["image_name"];
-        $likes = $row["no_likes"];
-        ?>
+            if ($query->num_rows > 0) {
+                ?><div class="images_list"><?php
+            while ($row = $query->fetch_assoc()) {
+                    $imageURL = '../uploads/' . $row["image_name"];
+                    $likes = $row["no_likes"];
+                    ?>
         <div class="contain">
             <img class="image" src="<?php echo $imageURL; ?>" alt="" />
             <?php
-if ($likes > 0) {
-            ?>
+            if ($likes > 0) {
+                        ?>
             <a id="like" class="like liked"><i class="fa-solid fa-heart"></i></a>
             <?php
-} else {
-            ?>
+            } else {
+                        ?>
             <a id="like" class="like"><i class="fa-solid fa-heart"></i>
 
             </a>
             <?php
-}
-        ?>
+            }
+                    ?>
 
             <p class="no_likes"><?php echo $likes ?></p>
 
@@ -133,7 +133,7 @@ if ($likes > 0) {
         <?php }?>
     </div>
     <?php
-} else {?>
+    } else {?>
     <p>No image(s) found...</p>
     <?php }?>
 </div>

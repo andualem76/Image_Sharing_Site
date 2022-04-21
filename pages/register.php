@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
     <link rel="stylesheet" href="http://localhost/image_sharing_site/css/images_style.css" />
+    <script src="https://kit.fontawesome.com/28921f4de5.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -35,7 +36,7 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex flex-row align-items-center mb-4">
+                                <div class="d-flex flex-row align-items-center mb-4 ">
                                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
                                         <label class="form-label" for="form3Example3c">Your Email</label>
@@ -43,7 +44,13 @@
 
                                     </div>
                                 </div>
-
+                                <div class="d-flex flex-row align-items-center mb-4 py-3">
+                                    <i class="fa-solid fa-cake-candles fa-lg me-3 fa-fw"></i>
+                                    <div class="form-outline flex-fill mb-0">
+                                        <label for="birthday">Birthday:</label>
+                                        <input type="date" id="birthday" name="birthday">
+                                    </div>
+                                </div>
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
@@ -60,7 +67,10 @@
                                 <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                     <button type="submit" class="btn btn-primary btn-lg">Register</button>
                                 </div>
-
+                                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                    <a href="login.php" class="forgot-link float-right text-primary">I have account,
+                                        Login</a>
+                                </div>
                             </form>
 
 

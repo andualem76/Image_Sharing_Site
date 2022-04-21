@@ -14,18 +14,18 @@ ob_start();
                 href="http://localhost/image_sharing_site/index.php">Collections</a>
         </li>
         <?php
-// Include the database configuration file
-include 'api/dbConfig.php';
+            // Include the database configuration file
+            include 'api/dbConfig.php';
 
-// Get images from the database
-$query = $db->query("SELECT * FROM catagories");
+            // Get images from the database
+            $query = $db->query("SELECT * FROM catagories");
 
-if ($query->num_rows > 0) {
-    ?>
+            if ($query->num_rows > 0) {
+                ?>
 
 
         <?php
-while ($row = $query->fetch_assoc()) {
+        while ($row = $query->fetch_assoc()) {
         $catagories = $row["catagories"];
         ?>
 
@@ -38,8 +38,8 @@ while ($row = $query->fetch_assoc()) {
                         value=<?php echo $catagories ?>>
                 </form>
                 <?php
-if (isset($_POST[$catagories])) {
-//check if form was submitted
+            if (isset($_POST[$catagories])) {
+                    //check if form was submitted
             $_SESSION['catagory'] = $catagories;
             header('location: http://localhost/image_sharing_site/pages/catagories.php');
             ob_end_flush();
@@ -52,7 +52,7 @@ if (isset($_POST[$catagories])) {
         <?php }?>
 
         <?php
-} else {}?>
+        } else {}?>
 
 
     </ul>
@@ -61,36 +61,36 @@ if (isset($_POST[$catagories])) {
 
 <div class="container notify_upload pt-4 ">
     <?php
-if (isset($_SESSION['success_message'])) {
-    ?>
+    if (isset($_SESSION['success_message'])) {
+                ?>
     <p class=<?php echo $_SESSION['color']; ?>>
         <?php
-echo $_SESSION['success_message'];
-    ?>
+    echo $_SESSION['success_message'];
+        ?>
     </p>
     <?php unset($_SESSION['success_message']);
-}
-?>
+                            }
+                            ?>
 </div>
 
 
 <div class="container home-contain">
     <?php
-// Include the database configuration file
-include 'api/dbConfig.php';
+            // Include the database configuration file
+            include 'api/dbConfig.php';
 
-// Get images from the database
-$query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
+            // Get images from the database
+            $query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
 
-if ($query->num_rows > 0) {
-    while ($row = $query->fetch_assoc()) {
-        $imageURL = 'uploads/' . $row["image_name"];
-        $likes = $row["no_likes"];?>
+            if ($query->num_rows > 0) {
+                while ($row = $query->fetch_assoc()) {
+                    $imageURL = 'uploads/' . $row["image_name"];
+                    $likes = $row["no_likes"];?>
     <img class="img-fluid home_image" src="<?php echo $imageURL; ?>" alt="" />
     <?php
-break;
-    }?><?php
-} else {?>
+            break;
+                }?><?php
+            } else {?>
     <img class="img-fluid home_image" src="uploads/Home.jpg" alt="" />
     <?php }?>
     <div class="container title">
@@ -120,32 +120,32 @@ break;
 <div class=" container big">
 
     <?php
-// Include the database configuration file
-include 'api/dbConfig.php';
+        // Include the database configuration file
+        include 'api/dbConfig.php';
 
-// Get images from the database
-$query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
+        // Get images from the database
+        $query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
 
-if ($query->num_rows > 0) {
-    ?><div class="images_list"><?php
-while ($row = $query->fetch_assoc()) {
-        $imageURL = 'uploads/' . $row["image_name"];
-        $likes = $row["no_likes"];
-        ?>
+        if ($query->num_rows > 0) {
+            ?><div class="images_list"><?php
+        while ($row = $query->fetch_assoc()) {
+                $imageURL = 'uploads/' . $row["image_name"];
+                $likes = $row["no_likes"];
+                ?>
         <div class="contain">
             <img class="image" src="<?php echo $imageURL; ?>" alt="" />
             <?php
-if ($likes > 0) {
-            ?>
+        if ($likes > 0) {
+                    ?>
             <a id="like" class="like liked"><i class="fa-solid fa-heart"></i></a>
             <?php
-} else {
-            ?>
+        } else {
+                    ?>
             <a id="like" class="like"><i class="fa-solid fa-heart"></i>
 
             </a>
             <?php
-}
+        }
         ?>
 
             <p class="no_likes"><?php echo $likes ?></p>
