@@ -1,3 +1,7 @@
+<?php
+session_start();
+ob_start();
+?>
 <?php include '../components/nav.php'?>
 
 <div class="container catagories">
@@ -6,8 +10,7 @@
             <a class="nav-link disabled">Catagories</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page"
-                href="http://localhost/image_sharing_site/index.php">Collections</a>
+            <a class="nav-link" aria-current="page" href="http://localhost/image_sharing_site/index.php">Collections</a>
         </li>
         <?php
 // Include the database configuration file
@@ -26,8 +29,29 @@ while ($row = $query->fetch_assoc()) {
         ?>
 
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="catagories.php"><?php echo $catagories ?></a>
+            <a class="nav-link
+            <?php
+if ($catagories == $_SESSION['catagory']) {
+            echo "active";
+        }
+        ?>
+            " aria-current="page">
+                <form method="post">
+                    <input type="submit" name="<?php echo $catagories ?>" class=" submit_btn"
+                        value=<?php echo $catagories ?>>
+                </form>
+                <?php
+if (isset($_POST[$catagories])) {
+//check if form was submitted
+            $_SESSION['catagory'] = $catagories;
+            header('location: http://localhost/image_sharing_site/pages/catagories.php');
+            ob_end_flush();
+        }
+        ?>
+            </a>
+
         </li>
+
         <?php }?>
 
         <?php
@@ -38,10 +62,9 @@ while ($row = $query->fetch_assoc()) {
 </div>
 
 
-
 <div class="container">
     <div class=" text-start pt-4 col-5 ">
-        <h1>Nature</h1>
+        <h1><?php echo $_SESSION['catagory'] ?></h1>
         <p>Let’s celebrate the magic of Mother Earth — with images of everything our planet has to offer, from stunning
             seascapes, starry skies, and everything in between. </p>
     </div>

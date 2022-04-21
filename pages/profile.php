@@ -58,6 +58,7 @@ echo $_SESSION['upload'];
                             <?php
 if (isset($_POST['submit'])) {
 //check if form was submitted
+
     include 'upload.php';
 }
 ?>

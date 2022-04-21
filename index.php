@@ -30,8 +30,25 @@ while ($row = $query->fetch_assoc()) {
         ?>
 
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="pages/catagories.php"><?php echo $catagories ?></a>
+            <a class="nav-link
+            
+            " aria-current="page">
+                <form method="post">
+                    <input type="submit" name="<?php echo $catagories ?>" class=" submit_btn"
+                        value=<?php echo $catagories ?>>
+                </form>
+                <?php
+if (isset($_POST[$catagories])) {
+//check if form was submitted
+            $_SESSION['catagory'] = $catagories;
+            header('location: http://localhost/image_sharing_site/pages/catagories.php');
+            ob_end_flush();
+        }
+        ?>
+            </a>
+
         </li>
+
         <?php }?>
 
         <?php
@@ -40,6 +57,7 @@ while ($row = $query->fetch_assoc()) {
 
     </ul>
 </div>
+
 
 <div class="container notify_upload pt-4 ">
     <?php

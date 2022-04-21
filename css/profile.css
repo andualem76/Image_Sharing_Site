@@ -28,3 +28,9 @@
 .profile-header .profile-header-tab {
     position: relative
 }
+.submit_btn{
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: none;
+}
