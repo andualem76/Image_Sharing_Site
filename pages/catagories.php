@@ -1,8 +1,4 @@
-<?php
-session_start();
-ob_start();
-?>
-<?php include 'components/nav.php'?>
+<?php include '../components/nav.php'?>
 
 <div class="container catagories">
     <ul class="nav nav-tabs">
@@ -15,7 +11,7 @@ ob_start();
         </li>
         <?php
 // Include the database configuration file
-include 'api/dbConfig.php';
+include '../api/dbConfig.php';
 
 // Get images from the database
 $query = $db->query("SELECT * FROM catagories");
@@ -30,7 +26,7 @@ while ($row = $query->fetch_assoc()) {
         ?>
 
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="pages/catagories.php"><?php echo $catagories ?></a>
+            <a class="nav-link" aria-current="page" href="catagories.php"><?php echo $catagories ?></a>
         </li>
         <?php }?>
 
@@ -41,69 +37,22 @@ while ($row = $query->fetch_assoc()) {
     </ul>
 </div>
 
-<div class="container notify_upload pt-4 ">
-    <?php
-if (isset($_SESSION['success_message'])) {
-    ?>
-    <p class=<?php echo $_SESSION['color']; ?>>
-        <?php
-echo $_SESSION['success_message'];
-    ?>
-    </p>
-    <?php unset($_SESSION['success_message']);
-}
-?>
-</div>
 
 
-<div class="container home-contain">
-    <?php
-// Include the database configuration file
-include 'api/dbConfig.php';
-
-// Get images from the database
-$query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
-
-if ($query->num_rows > 0) {
-    while ($row = $query->fetch_assoc()) {
-        $imageURL = 'uploads/' . $row["image_name"];
-        $likes = $row["no_likes"];?>
-    <img class="img-fluid home_image" src="<?php echo $imageURL; ?>" alt="" />
-    <?php
-break;
-    }?><?php
-} else {?>
-    <img class="img-fluid home_image" src="uploads/Home.jpg" alt="" />
-    <?php }?>
-    <div class="container title">
-        <h1>Unslash</h1>
-        <h2>Download any image</h2>
-        <div class="search_contain">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search any image"
-                    aria-describedby="button-addon2" />
-                <button class="btn btn-success" type="button" id="button-addon2">
-                    Search
-                </button>
-            </div>
-        </div>
+<div class="container">
+    <div class=" text-start pt-4 col-5 ">
+        <h1>Nature</h1>
+        <p>Let’s celebrate the magic of Mother Earth — with images of everything our planet has to offer, from stunning
+            seascapes, starry skies, and everything in between. </p>
     </div>
 </div>
 
 
-
-
-
-
-<div class="py-5 container">
-    <h2>Browse Uploaded image</h2>
-</div>
-
-<div class=" container big">
+<div class="container big pt-3">
 
     <?php
 // Include the database configuration file
-include 'api/dbConfig.php';
+include '../api/dbConfig.php';
 
 // Get images from the database
 $query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
@@ -111,7 +60,7 @@ $query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
 if ($query->num_rows > 0) {
     ?><div class="images_list"><?php
 while ($row = $query->fetch_assoc()) {
-        $imageURL = 'uploads/' . $row["image_name"];
+        $imageURL = '../uploads/' . $row["image_name"];
         $likes = $row["no_likes"];
         ?>
         <div class="contain">
@@ -136,7 +85,7 @@ if ($likes > 0) {
 
             <div class="image_profile">
 
-                <a href="pages/profile.php">
+                <a href="profile.php">
                     <div class="block">
                         <img src="http://localhost/image_sharing_site/account_picture.png" alt="">
                         <p class="pt-3">uploader name</p>
@@ -154,4 +103,6 @@ if ($likes > 0) {
 </div>
 
 
-<?php include 'components/footer.php'?>
+
+
+<?php include '../components/footer.php'?>
