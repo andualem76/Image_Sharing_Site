@@ -2,6 +2,9 @@
 session_start();
 ob_start();
 ?>
+<?php $user_id = 1;?>
+<?php include 'api/like_api.php'?>
+
 <?php include 'components/nav.php'?>
 
 <div class="container catagories">
@@ -130,25 +133,23 @@ ob_start();
             ?><div class="images_list"><?php
         while ($row = $query->fetch_assoc()) {
                 $imageURL = 'uploads/' . $row["image_name"];
-                $likes = $row["no_likes"];
+                $image_id = $row["id"];
                 ?>
         <div class="contain">
             <img class="image" src="<?php echo $imageURL; ?>" alt="" />
-            <?php
-        if ($likes > 0) {
-                    ?>
-            <a id="like" class="like liked"><i class="fa-solid fa-heart"></i></a>
-            <?php
-        } else {
-                    ?>
-            <a id="like" class="like"><i class="fa-solid fa-heart"></i>
 
+
+            <a <?php if (userLiked($image_id)): ?> class="like liked" <?php else: ?> class="like not_liked"
+                <?php endif ?> data-id="<?php echo $image_id ?>">
+                <i class="fa-solid fa-heart">
+
+                </i>
             </a>
-            <?php
-        }
-        ?>
 
-            <p class="no_likes"><?php echo $likes ?></p>
+            <span class="no_likes"><?php echo getLikes($image_id)  ?></span>
+
+
+
 
             <a class="down" href="<?php echo $imageURL ?>" download><i class="fa-solid fa-download"></i></a>
 

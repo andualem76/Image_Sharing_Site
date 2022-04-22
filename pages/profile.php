@@ -53,7 +53,7 @@ ob_start();
                             <form action="" method="POST" enctype="multipart/form-data">
 
                                 <input type="file" name="file">
-                                <input type="submit" name="submit">
+                                <input type="submit" name="submit" value="Upload Image">
                             </form>
                             <?php
                             if (isset($_POST['submit'])) {

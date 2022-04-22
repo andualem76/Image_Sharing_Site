@@ -20,6 +20,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
             $insert = $db->query("INSERT into images (image_name, uploaded_on) VALUES ('" . $fileName . "', NOW() )");
             if ($insert) {
                 $_SESSION['upload'] = "The file " . $fileName . " has been uploaded successfully.";
+                $_SESSION['color'] = "notify_upload_green";
                 header('location: http://localhost/image_sharing_site/pages/profile.php');
                 ob_end_flush();
             } else {
