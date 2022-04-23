@@ -2,7 +2,16 @@
 session_start();
 ob_start();
 ?>
+
 <?php include '../components/nav.php'?>
+
+<?php       if (isset($_SESSION['selected_menu'])) {
+
+}else{
+    $_SESSION['selected_menu'] ="myphotos";
+}
+
+?>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -66,77 +75,138 @@ ob_start();
 
                         <!-- END profile-header-content -->
                         <!-- BEGIN profile-header-tab -->
-                        <ul class="profile-header-tab nav nav-tabs">
-                            <li class="nav-item"><a href="#profile-post" class="nav-link active show"
-                                    data-toggle="tab">MY PHOTOS</a></li>
-                            <li class="nav-item"><a href="#profile-about" class="nav-link" data-toggle="tab">LIKED
-                                    PHOTOS</a>
-                            </li>
+                        <div>
 
-                        </ul>
-                        <!-- END profile-header-tab -->
+                            <ui class="nav nav-tabs">
+
+                                <li class="nav-item">
+                                    <a class="nav-link
+                                    <?php
+            if ("myphotos" == $_SESSION['selected_menu']) {
+                        echo "active";
+                    }
+                    ?>
+                                " aria-current="page">
+                                        <form method="post">
+                                            <input type="submit" name="myphotos" class=" submit_btn" value="My Photos">
+
+                                        </form>
+
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link
+                                    <?php
+            if ("likedphotos" == $_SESSION['selected_menu']) {
+                        echo "active";
+                    }
+                    ?>
+                                " aria-current="page">
+                                        <form method="post">
+
+                                            <input type="submit" name="likedphotos" class=" submit_btn"
+                                                value="Liked Photos">
+                                        </form>
+
+                                    </a>
+                                </li>
+
+                                <?php
+                                    if (isset($_POST["myphotos"])) {
+                                    //check if form was submitted
+                                                $_SESSION['selected_menu'] = "myphotos";
+                                                header('location: http://localhost/image_sharing_site/pages/profile.php');
+                                                ob_end_flush();
+                                            }
+                                            if (isset($_POST["likedphotos"])) {
+                                                //check if form was submitted
+                                                            $_SESSION['selected_menu'] = "likedphotos";
+                                                            header('location: http://localhost/image_sharing_site/pages/profile.php');
+                                                            ob_end_flush();
+                                                        }
+                                            ?>
+
+
+
+
+
+                                </ul>
+                                <!-- END profile-header-tab -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
-<div class="container big pt-3">
+    <div class="container big pt-3">
 
-    <?php
+        <?php
+
             // Include the database configuration file
             include '../api/dbConfig.php';
 
             // Get images from the database
-            $query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
-
+            if($_SESSION["selected_menu"] == "myphotos"){
+            $query = $db->query("SELECT * FROM images where user_id = $user_id ORDER BY uploaded_on DESC ");
+            }else{
+            $query = $db->query("SELECT * FROM liked_images where user_id = $user_id");
+           
+            }
             if ($query->num_rows > 0) {
                 ?><div class="images_list"><?php
-            while ($row = $query->fetch_assoc()) {
+
+                while ($row = $query->fetch_assoc()) {
+
+            if($_SESSION["selected_menu"] == "myphotos"){
+            
                     $imageURL = '../uploads/' . $row["image_name"];
-                    $likes = $row["no_likes"];
-                    ?>
-        <div class="contain">
-            <img class="image" src="<?php echo $imageURL; ?>" alt="" />
-            <?php
-            if ($likes > 0) {
-                        ?>
-            <a id="like" class="like liked"><i class="fa-solid fa-heart"></i></a>
-            <?php
-            } else {
-                        ?>
-            <a id="like" class="like"><i class="fa-solid fa-heart"></i>
 
-            </a>
-            <?php
+            }else{
+               
+                    $imageid = $row['image_id'];
+                    $query2 = $db->query("SELECT * FROM images where id = $imageid");
+                    while ($row2 = $query2->fetch_assoc()) {
+                    $imageURL = '../uploads/' . $row2["image_name"];
+                    }
             }
+
+                   
                     ?>
+            <div class="contain">
+                <img class="image" src="<?php echo $imageURL; ?>" alt="" />
 
-            <p class="no_likes"><?php echo $likes ?></p>
+                <a id="like" class="like liked"><i class="fa-solid fa-heart"></i></a>
 
-            <a class="down" href="<?php echo $imageURL ?>" download><i class="fa-solid fa-download"></i></a>
 
-            <div class="image_profile">
 
-                <a href="profile.php">
-                    <div class="block">
-                        <img src="http://localhost/image_sharing_site/account_picture.png" alt="">
-                        <p class="pt-3">uploader name</p>
-                    </div>
-                </a>
+
+
+                <a class="down" href="<?php echo $imageURL ?>" download><i class="fa-solid fa-download"></i></a>
+
+                <div class="image_profile">
+
+                    <a href="profile.php">
+                        <div class="block">
+                            <img src="http://localhost/image_sharing_site/account_picture.png" alt="">
+                            <p class="pt-3">uploader name</p>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </div>
 
+            <?php }?>
+
+
+        </div>
+        <?php
+    } else {?>
+        <p>No image(s) found...</p>
         <?php }?>
     </div>
-    <?php
-    } else {?>
-    <p>No image(s) found...</p>
-    <?php }?>
-</div>
 
 
-<?php include '../components/footer.php'?>
+    <?php include '../components/footer.php'?>

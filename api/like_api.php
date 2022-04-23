@@ -7,8 +7,8 @@ if (isset($_POST['action'])) {
   $action = $_POST['action'];
   switch ($action) {
   	case 'like':
-         $sql="INSERT INTO liked_images (user_id, image_id, rate_action) 
-         	   VALUES ($user_id, $image_id, 'like') 
+         $sql="INSERT INTO liked_images (user_id, image_id, rate_action,like_time) 
+         	   VALUES ($user_id, $image_id, 'like',NOW()) 
          	   ON DUPLICATE KEY UPDATE rate_action='like'";
          break;
   	case 'unlike':

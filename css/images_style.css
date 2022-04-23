@@ -86,10 +86,12 @@ body{
     height: 50px;
     border-radius: 50%;
 }
+.notify_upload_red{
+    color: rgb(206, 63, 63);
+}
 .notify_upload_green{
     color: rgb(39, 150, 39);
 }
-    
 
 .big{
     display: flex;

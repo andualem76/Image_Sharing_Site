@@ -3,6 +3,7 @@ session_start();
 ob_start();
 ?>
 <?php $user_id = 1;?>
+
 <?php include 'api/like_api.php'?>
 
 <?php include 'components/nav.php'?>
@@ -88,7 +89,7 @@ ob_start();
             if ($query->num_rows > 0) {
                 while ($row = $query->fetch_assoc()) {
                     $imageURL = 'uploads/' . $row["image_name"];
-                    $likes = $row["no_likes"];?>
+                ?>
     <img class="img-fluid home_image" src="<?php echo $imageURL; ?>" alt="" />
     <?php
             break;
