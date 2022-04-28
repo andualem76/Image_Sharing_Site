@@ -145,11 +145,11 @@ ob_start();
         while ($row = $query->fetch_assoc()) {
                 $imageURL = 'uploads/' . $row["image_name"];
                 $image_id = $row["id"];
-                $user_id =$row["user_id"];
+                $user_id_inner =$row["user_id"];
                 ?>
         <div class="contain">
             <img class="image" src="<?php echo $imageURL; ?>" alt="" />
-
+            <?php if(isset($_SESSION['user_id'])){ ?>
 
             <a <?php if (userLiked($image_id)): ?> class="like liked" <?php else: ?> class="like not_liked"
                 <?php endif ?> data-id="<?php echo $image_id ?>">
@@ -160,13 +160,24 @@ ob_start();
 
             <span class="no_likes"><?php echo getLikes($image_id)  ?></span>
 
+            <?php } else{
+                ?>
+            <a class="like not-liked" data-id="<?php echo $image_id ?>">
+                <i class="fa-solid fa-heart">
+
+                </i>
+            </a>
+
+            <span class="no_likes"><?php echo getLikes($image_id)  ?></span>
+            <?php
+                }?>
 
 
 
             <a class="down" href="<?php echo $imageURL ?>" download><i class="fa-solid fa-download"></i></a>
 
             <div class="image_profile">
-                <?php $query2 = $db->query("SELECT * FROM user where id = $user_id");
+                <?php $query2 = $db->query("SELECT * FROM user where id = $user_id_inner");
 
                 while($row2 = $query2->fetch_assoc()){ ?>
                 <form action="" method="POST">

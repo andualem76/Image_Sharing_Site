@@ -64,6 +64,7 @@ function userLiked($image_id)
   		  AND image_id=$image_id AND rate_action='like'";
   $result = mysqli_query($db, $sql);
   if (mysqli_num_rows($result) > 0) {
+    
   	return true;
   }else{
   	return false;

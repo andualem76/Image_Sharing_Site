@@ -2,9 +2,20 @@
 session_start();
 ob_start();
 ?>
+<?php 
 
-<?php include '../components/nav.php'?>
+if (isset($_SESSION['user_id'])) {
+    
+$user_id = $_SESSION['user_id'];
+
+}else{
+    $user_id = 0; 
+}
+
+?>
 <?php include '../api/like_api.php'?>
+<?php include '../components/nav.php'?>
+
 <?php       if (isset($_SESSION['selected_menu'])) {
 
 }else{
