@@ -3,7 +3,7 @@ session_start();
 ob_start();
 ?>
 <?php include '../components/nav.php'?>
-
+<?php include '../api/like_api.php'?>
 <div class="container catagories">
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -71,44 +71,44 @@ ob_start();
 </div>
 
 
-<div class="container big pt-3">
+
+
+<div class=" container big">
 
     <?php
-                // Include the database configuration file
-                include '../api/dbConfig.php';
+        // Include the database configuration file
+        include '../api/dbConfig.php';
+        $catagory = $_SESSION['catagory'];
+        // Get images from the database
+        $query = $db->query("SELECT * FROM images WHERE catagory='$catagory' ORDER BY uploaded_on DESC");
 
-                // Get images from the database
-                $query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
-
-                if ($query->num_rows > 0) {
-                    ?><div class="images_list"><?php
-                while ($row = $query->fetch_assoc()) {
-                        $imageURL = '../uploads/' . $row["image_name"];
-                        $likes = $row["no_likes"];
-                        ?>
+        if ($query->num_rows > 0) {
+            ?><div class="images_list"><?php
+        while ($row = $query->fetch_assoc()) {
+                $imageURL = '../uploads/' . $row["image_name"];
+                $image_id = $row["id"];
+                ?>
         <div class="contain">
             <img class="image" src="<?php echo $imageURL; ?>" alt="" />
-            <?php
-                if ($likes > 0) {
-                            ?>
-            <a id="like" class="like liked"><i class="fa-solid fa-heart"></i></a>
-            <?php
-                } else {
-                            ?>
-            <a id="like" class="like"><i class="fa-solid fa-heart"></i>
 
+
+            <a <?php if (userLiked($image_id)): ?> class="like liked" <?php else: ?> class="like not_liked"
+                <?php endif ?> data-id="<?php echo $image_id ?>">
+                <i class="fa-solid fa-heart">
+
+                </i>
             </a>
-            <?php
-                }
-                        ?>
 
-            <p class="no_likes"><?php echo $likes ?></p>
+            <span class="no_likes"><?php echo getLikes($image_id)  ?></span>
+
+
+
 
             <a class="down" href="<?php echo $imageURL ?>" download><i class="fa-solid fa-download"></i></a>
 
             <div class="image_profile">
 
-                <a href="profile.php">
+                <a href="pages/profile.php">
                     <div class="block">
                         <img src="http://localhost/image_sharing_site/account_picture.png" alt="">
                         <p class="pt-3">uploader name</p>
@@ -120,7 +120,7 @@ ob_start();
         <?php }?>
     </div>
     <?php
-        } else {?>
+} else {?>
     <p>No image(s) found...</p>
     <?php }?>
 </div>

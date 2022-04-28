@@ -5,6 +5,7 @@ include "../components/nav.php";
 // Include the database configuration file
 include '../api/dbConfig.php';
 $statusMsg = '';
+$catagory= $_POST['catagory'];
 
 // File upload path
 $targetDir = "../uploads/";
@@ -19,7 +20,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
         // Upload file to server
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
             // Insert image file name into database
-            $insert = $db->query("INSERT into images (user_id, image_name, uploaded_on) VALUES ($user_id,'" . $fileName . "', NOW() )");
+            $insert = $db->query("INSERT into images (user_id, image_name, catagory,uploaded_on) VALUES ($user_id,'" . $fileName . "', '$catagory', NOW() )");
             if ($insert) {
                 $_SESSION['upload'] = "The file " . $fileName . " has been uploaded successfully.";
                 $_SESSION['color'] = "notify_upload_green";

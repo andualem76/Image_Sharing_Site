@@ -61,7 +61,34 @@ ob_start();
                             <p> Select Image File to Upload:</p>
                             <form action="" method="POST" enctype="multipart/form-data">
 
-                                <input type="file" name="file">
+                                <input type="file" class="mb-2" name="file"><br>
+                                <label for="cars" class="mb-3">Catagory:</label>
+                                <select id="cars" class="mb-3" name="catagory">
+
+
+                                    <?php
+            // Include the database configuration file
+            include '../api/dbConfig.php';
+
+            // Get images from the database
+            $query = $db->query("SELECT * FROM catagories");
+
+            if ($query->num_rows > 0) {
+           
+        while ($row = $query->fetch_assoc()) {
+        $catagories = $row["catagories"];
+        ?>
+
+                                    <option value="<?php echo $catagories ?>">
+                                        <?php echo $catagories ?>
+                                    </option>
+
+                                    <?php
+     
+    } }?>
+
+                                </select><br>
+
                                 <input type="submit" name="submit" value="Upload Image">
                             </form>
                             <?php
