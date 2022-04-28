@@ -60,7 +60,7 @@ function userLiked($image_id)
 {
   global $db;
   global $user_id;
-  $sql = "SELECT * FROM liked_images WHERE user_id=$user_id 
+  $sql = "SELECT * FROM liked_images WHERE user_id = $user_id 
   		  AND image_id=$image_id AND rate_action='like'";
   $result = mysqli_query($db, $sql);
   if (mysqli_num_rows($result) > 0) {

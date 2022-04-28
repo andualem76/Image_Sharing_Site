@@ -26,5 +26,7 @@ if($num > 0){
     
     $db->close();
 }else{
-
+    $_SESSION['success_message'] = "Wrong email or password";
+    $_SESSION['color'] = "notify_upload_red";
+    header('location: http://localhost/image_sharing_site/pages/login.php');
 }

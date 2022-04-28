@@ -4,13 +4,13 @@ ob_start();
 ?>
 <?php 
 
-if (isset($_SESSION['user_id'])) {
-    
-$user_id = $_SESSION['user_id'];
+    if (isset($_SESSION['user_id'])) {
+        
+    $user_id = $_SESSION['user_id'];
 
-                    }else{
-                        $user_id = 0; 
-                    }
+    }else{
+        $user_id = 0; 
+    }
 
 ?>
 <?php include 'api/like_api.php'?>
@@ -107,7 +107,7 @@ $user_id = $_SESSION['user_id'];
     <img class="img-fluid home_image" src="uploads/Home.jpg" alt="" />
     <?php }?>
     <div class="container title">
-        <h1>Unslash</h1>
+        <h1>Image Sharing</h1>
         <h2>Download any image</h2>
         <div class="search_contain">
             <div class="input-group mb-3">
@@ -140,10 +140,12 @@ $user_id = $_SESSION['user_id'];
         $query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
 
         if ($query->num_rows > 0) {
-            ?><div class="images_list"><?php
+            ?>
+    <div class="images_list"><?php
         while ($row = $query->fetch_assoc()) {
                 $imageURL = 'uploads/' . $row["image_name"];
                 $image_id = $row["id"];
+                $user_id =$row["user_id"];
                 ?>
         <div class="contain">
             <img class="image" src="<?php echo $imageURL; ?>" alt="" />
@@ -164,13 +166,43 @@ $user_id = $_SESSION['user_id'];
             <a class="down" href="<?php echo $imageURL ?>" download><i class="fa-solid fa-download"></i></a>
 
             <div class="image_profile">
+                <?php $query2 = $db->query("SELECT * FROM user where id = $user_id");
 
-                <a href="pages/profile.php">
-                    <div class="block">
-                        <img src="http://localhost/image_sharing_site/account_picture.png" alt="">
-                        <p class="pt-3">uploader name</p>
-                    </div>
-                </a>
+                while($row2 = $query2->fetch_assoc()){ ?>
+                <form action="" method="POST">
+
+                    <button style="
+                            background: none;
+                            color: inherit;
+                            border: none;
+                            padding: 0;
+                            font: inherit;
+                            cursor: pointer;
+                            outline: inherit;
+                                " name="<?php echo $row2["name"];?>">
+                        <div class="block">
+                            <img src="http://localhost/image_sharing_site/uploads/<?php echo $row2["profile_pic"];?>"
+                                alt="">
+                            <p class="pt-3"><?php echo $row2["name"];?></p>
+                        </div>
+                    </button>
+                </form>
+                <?php
+                            if (isset($_POST[$row2["name"]])) {
+                                if($_SESSION['user_id'] != $row2["id"]){
+                            //check if form was submitted
+                            $_SESSION["show_profile_id"] = $row2["id"];
+                                $_SESSION["show_profile_pic"]=$row2["profile_pic"];
+                                $_SESSION["show_user_name"]=$row2["name"];
+                                header('location: http://localhost/image_sharing_site/pages/users_profile.php');
+                            }
+                        else{
+                            header('location: http://localhost/image_sharing_site/pages/profile.php');
+                        }
+                    }
+                            ?>
+                <?php } ?>
+
             </div>
         </div>
 

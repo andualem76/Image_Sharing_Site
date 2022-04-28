@@ -1,6 +1,24 @@
 <?php
 session_start();
 include "../components/nav.php"?>
+
+
+<div class="container notify_upload pt-4 ">
+    <?php
+                                        if (isset($_SESSION['upload'])) {
+                                            ?>
+    <p class=<?php echo $_SESSION['color']; ?>>
+        <?php
+                                        echo $_SESSION['upload'];
+                                            ?>
+    </p>
+    <?php unset($_SESSION['upload']);
+                                        }
+                                        ?>
+</div>
+
+</div>
+
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
@@ -41,16 +59,18 @@ include "../components/nav.php"?>
 
                     </div>
                 </form>
-                <form action="profile_pic.php" method="POST" enctype="multipart/form-data">
+                <form action="http://localhost\Image_Sharing_Site\api\change_password_api.php" method="POST"
+                    enctype="multipart/form-data">
 
                     <div class="row mt-3">
                         <div>
-                            <div class="col-md-6"><label class="labels">Current password</label><input type="text"
-                                    class="form-control" placeholder="Current password" value=""></div>
+                            <div class="col-md-6"><label class="labels">Current password</label><input
+                                    name="current_password" type="text" class="form-control"
+                                    placeholder="Current password" value=""></div>
 
 
-                            <div class="col-md-6"><label class="labels">New Password</label><input type="text"
-                                    class="form-control" placeholder="New Password" value=""></div>
+                            <div class="col-md-6"><label class="labels">New Password</label><input name="new_password"
+                                    type="text" class="form-control" placeholder="New Password" value=""></div>
                         </div>
 
                         <div class="mt-1 text-end"><input type="submit" class="btn btn-warning " name="submit"
@@ -59,7 +79,8 @@ include "../components/nav.php"?>
                     </div>
                 </form>
 
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="http://localhost\Image_Sharing_Site\api\delete_account_api.php" method="POST"
+                    enctype="multipart/form-data">
                     <div class="mt-5 text-start"><input type="submit" class="btn btn-danger " name="submit"
                             value="Delete account">
                     </div>

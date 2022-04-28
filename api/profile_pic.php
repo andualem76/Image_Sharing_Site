@@ -11,12 +11,10 @@ $statusMsg = '';
 // File upload path
 $targetDir = "../uploads/";
 
-if (isset($_POST["submit"])) {
-    if(empty($_FILES["file"]["name"])){
-        $fileName = $_SESSION['profile_pic'];
-    }else{
-        $fileName = basename($_FILES["file"]["name"]);
-    }
+if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
+    
+    $fileName = basename($_FILES["file"]["name"]);
+   
     $user_id = $_SESSION['user_id'];
  
     $targetFilePath = $targetDir . $fileName;
@@ -34,13 +32,12 @@ if (isset($_POST["submit"])) {
                 $_SESSION['upload'] = "The file " . $fileName . " has been uploaded successfully.";
                 $_SESSION['color'] = "notify_upload_green";
                 $_SESSION['profile_pic'] = $fileName;
-                $_SESSION['user_name'] = $name;
-                header('location: http://localhost/image_sharing_site/pages/profile.php');
+                header('location: http://localhost/image_sharing_site/pages/edit_profile.php');
                 ob_end_flush();
             } else {
                 $_SESSION['upload'] =" File upload failed, please try again.";
                 $_SESSION['color'] = "notify_upload_red";
-                header('location: http://localhost/image_sharing_site/pages/profile.php');
+                header('location: http://localhost/image_sharing_site/pages/edit_profile.php');
                 ob_end_flush();
              
 
@@ -48,14 +45,19 @@ if (isset($_POST["submit"])) {
         } else {
             $_SESSION['upload'] = "Sorry, there was an error uploading your file.";
             $_SESSION['color'] = "notify_upload_red";
-            header('location: http://localhost/image_sharing_site/pages/profile.php');
+            header('location: http://localhost/image_sharing_site/pages/edit_profile.php');
             ob_end_flush();
            
         }
     } else {
         $_SESSION['upload'] =  'Sorry, only JPG, JPEG, PNG, GIF, & PDF files are allowed to upload.';
         $_SESSION['color'] = "notify_upload_red";
-        header('location: http://localhost/image_sharing_site/pages/profile.php');
+        header('location: http://localhost/image_sharing_site/pages/edit_profile.php');
         ob_end_flush();
     }
-} 
+}  else {
+    $_SESSION['upload'] = 'Please select a file to upload.';
+    $_SESSION['color'] = "notify_upload_red";
+    header('location: http://localhost/image_sharing_site/pages/edit_profile.php');
+    ob_end_flush();
+}

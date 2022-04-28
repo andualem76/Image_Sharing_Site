@@ -88,9 +88,17 @@ body{
 }
 .notify_upload_red{
     color: rgb(206, 63, 63);
+    background: rgb(252, 216, 216);
+    border: 2px solid rgb(206, 63, 63);
+    border-radius: 5px;
+    padding: 10px;
 }
 .notify_upload_green{
     color: rgb(39, 150, 39);
+    background: rgb(173, 236, 183);
+    border: 1px solid rgb(39, 150, 39);
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .big{

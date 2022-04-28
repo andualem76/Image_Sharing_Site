@@ -29,6 +29,7 @@ if($num > 0){
             $stmt->execute();
     
             $_SESSION['success_message'] = "You have successfully registered " . $username. " Please login";
+            $_SESSION['color'] = "notify_upload_green";
             header('location: http://localhost/image_sharing_site/pages/login.php');
             $stmt->close();
             $db->close();
