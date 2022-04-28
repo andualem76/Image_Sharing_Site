@@ -30,9 +30,12 @@ ob_start();
                             <!-- END profile-header-img -->
                             <!-- BEGIN profile-header-info -->
                             <div class="profile-header-info">
-                                <h4 class="m-t-10 m-b-5">Sean Ngu</h4>
+                                <h4 class="m-t-10 m-b-5"><?php echo $_SESSION['user_name']?></h4>
                                 <p class="m-b-10">UXUI + Frontend Developer</p>
                                 <a href="edit_profile.php" class="btn btn-sm btn-info mb-2">Edit Profile</a>
+                                <a href="http://localhost\Image_Sharing_Site\api\logout_api.php"
+                                    class="btn btn-sm btn-danger mb-2">Log out</a>
+
                             </div>
                             <!-- END profile-header-info -->
 

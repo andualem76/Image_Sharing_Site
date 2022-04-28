@@ -1,4 +1,14 @@
-<?php $user_id = 1;?>
+<?php 
+
+if (isset($_SESSION['user_id'])) {
+    
+$user_id = $_SESSION['user_id'];
+
+                    }else{
+                        $user_id = 0; 
+                    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,8 +57,20 @@
                     </li>
                 </ul>
             </div>
+            <?php
+            if (isset($_SESSION['user_id'])){
+                ?>
             <a href="http://localhost/image_sharing_site/pages/profile.php"><img class="user_profile"
                     src="http://localhost/image_sharing_site/account_picture.png" alt="" /></a>
+            <?php
+            }else{
+                ?>
+            <a href="http://localhost/image_sharing_site/pages/login.php"><button type="button"
+                    class="btn btn-outline-success">LOGIN</button></a>
+            <?php
+            }
+            ?>
+
 
         </div>
     </nav>

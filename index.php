@@ -2,8 +2,17 @@
 session_start();
 ob_start();
 ?>
-<?php $user_id = 1;?>
+<?php 
 
+if (isset($_SESSION['user_id'])) {
+    
+$user_id = $_SESSION['user_id'];
+
+                    }else{
+                        $user_id = 0; 
+                    }
+
+?>
 <?php include 'api/like_api.php'?>
 
 <?php include 'components/nav.php'?>

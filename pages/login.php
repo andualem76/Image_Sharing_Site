@@ -26,7 +26,7 @@
                             <p class="text-start h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
 
                             <form class="mx-1 mx-md-4" method="POST"
-                                action="http://localhost\Image_Sharing_Site\api\register_api.php">
+                                action="http://localhost\Image_Sharing_Site\api\login_api.php">
 
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
