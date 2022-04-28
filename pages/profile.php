@@ -25,7 +25,8 @@ ob_start();
                             <!-- BEGIN profile-header-img -->
                             <div class="profile-header-img">
                                 <img class="profile-header-img"
-                                    src="http://localhost/image_sharing_site/account_picture.png" alt="">
+                                    src="http://localhost/image_sharing_site/uploads/<?php echo $_SESSION['profile_pic']?>"
+                                    alt="">
                             </div>
                             <!-- END profile-header-img -->
                             <!-- BEGIN profile-header-info -->

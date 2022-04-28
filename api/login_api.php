@@ -18,6 +18,8 @@ $num = mysqli_num_rows($checkresult);
 if($num > 0){
     $_SESSION['user_id'] = $result['id'];
     $_SESSION['user_name'] = $result['name'];
+    $_SESSION['user_email'] = $result['email'];
+    $_SESSION['profile_pic'] = $result['profile_pic'];
     $_SESSION['color'] = "notify_upload_green";
     $_SESSION['success_message'] = "welcome " .$result['name'];
     header('location: http://localhost/image_sharing_site/index.php');

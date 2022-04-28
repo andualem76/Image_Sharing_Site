@@ -59,9 +59,10 @@ $user_id = $_SESSION['user_id'];
             </div>
             <?php
             if (isset($_SESSION['user_id'])){
+                $imageUrl="http://localhost/image_sharing_site/uploads/" .$_SESSION['profile_pic'];
                 ?>
             <a href="http://localhost/image_sharing_site/pages/profile.php"><img class="user_profile"
-                    src="http://localhost/image_sharing_site/account_picture.png" alt="" /></a>
+                    src=<?php echo $imageUrl?> alt="" /></a>
             <?php
             }else{
                 ?>

@@ -7,7 +7,7 @@ include '../api/dbConfig.php';
 $username = $_POST['name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
-
+$profile_pic = "account_picture.png";
 $check = "SELECT  * FROM user WHERE email = '$email' ";
 $checkresult = mysqli_query($db , $check);
 $num = mysqli_num_rows($checkresult);
@@ -23,13 +23,13 @@ if($num > 0){
         if (mysqli_connect_error()) {
             die();
         } else {
-            $INSERT = "INSERT INTO user (name,email,password) VALUES(?,?,?)";
+            $INSERT = "INSERT INTO user (name,email,password,profile_pic) VALUES(?,?,?,?)";
             $stmt = $db->prepare($INSERT);
-            $stmt->bind_param("sss", $username, $email, $password);
+            $stmt->bind_param("ssss", $username, $email, $password,$profile_pic);
             $stmt->execute();
     
-            $_SESSION['success_message'] = "You have successfully registered " . $username;
-            header('location: http://localhost/image_sharing_site/index.php');
+            $_SESSION['success_message'] = "You have successfully registered " . $username. " Please login";
+            header('location: http://localhost/image_sharing_site/pages/login.php');
             $stmt->close();
             $db->close();
         }
