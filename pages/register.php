@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +15,22 @@
 
 <body>
 
+    <div class="container notify_upload pt-4 ">
+        <?php
+    if (isset($_SESSION['success_message'])) {
+                ?>
+        <p class=<?php echo $_SESSION['color']; ?>>
+            <?php
+    echo $_SESSION['success_message'];
+        ?>
+        </p>
+        <?php unset($_SESSION['success_message']);
+                            }
+                            ?>
+    </div>
     <section class="vh-100">
+
+
         <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-12 col-xl-11">
