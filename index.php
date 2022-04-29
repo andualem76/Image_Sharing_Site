@@ -1,21 +1,17 @@
 <?php
 session_start();
 ob_start();
-?>
-<?php 
 
-    if (isset($_SESSION['user_id'])) {
-        
+if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
+}else{
+    $user_id = 0; 
+}
 
-    }else{
-        $user_id = 0; 
-    }
-
+include 'api/like_api.php';
+include 'components/nav.php';
+include 'api/dbConfig.php';
 ?>
-<?php include 'api/like_api.php'?>
-
-<?php include 'components/nav.php'?>
 
 <div class="container catagories">
     <ul class="nav nav-tabs">
@@ -27,89 +23,82 @@ ob_start();
                 href="http://localhost/image_sharing_site/index.php">Collections</a>
         </li>
         <?php
-            // Include the database configuration file
-            include 'api/dbConfig.php';
 
             // Get images from the database
             $query = $db->query("SELECT * FROM catagories");
-
             if ($query->num_rows > 0) {
-                ?>
 
-
-        <?php
-        while ($row = $query->fetch_assoc()) {
-        $catagories = $row["catagories"];
+            while ($row = $query->fetch_assoc()) {
+                $catagories = $row["catagories"];
         ?>
 
         <li class="nav-item">
-            <a class="nav-link
-            
-            " aria-current="page">
+            <a class="nav-link" aria-current="page">
                 <form method="post">
                     <input type="submit" name="<?php echo $catagories ?>" class=" submit_btn"
                         value=<?php echo $catagories ?>>
                 </form>
                 <?php
             if (isset($_POST[$catagories])) {
-                    //check if form was submitted
-            $_SESSION['catagory'] = $catagories;
-            header('location: http://localhost/image_sharing_site/pages/catagories.php');
-            ob_end_flush();
-        }
-        ?>
+                        
+                $_SESSION['catagory'] = $catagories;
+                header('location: http://localhost/image_sharing_site/pages/catagories.php');
+                ob_end_flush();
+            }
+            ?>
             </a>
-
         </li>
 
         <?php }?>
 
         <?php
-        } else {}?>
-
+        } else {
+            
+        }?>
 
     </ul>
 </div>
 
-
+<!-- success message -->
 <div class="container notify_upload pt-4 ">
     <?php
-    if (isset($_SESSION['success_message'])) {
-                ?>
+        if (isset($_SESSION['success_message'])) {
+    ?>
     <p class=<?php echo $_SESSION['color']; ?>>
         <?php
     echo $_SESSION['success_message'];
-        ?>
+    ?>
     </p>
     <?php unset($_SESSION['success_message']);
-                            }
-                            ?>
+        }
+    ?>
 </div>
 
-
+<!-- home image -->
 <div class="container home-contain">
     <?php
-            // Include the database configuration file
-            include 'api/dbConfig.php';
+        // Get images from the database
+        $query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
 
-            // Get images from the database
-            $query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
+        if ($query->num_rows > 0) {
+            while ($row = $query->fetch_assoc()) {
+                $imageURL = 'uploads/' . $row["image_name"];
+    ?>
 
-            if ($query->num_rows > 0) {
-                while ($row = $query->fetch_assoc()) {
-                    $imageURL = 'uploads/' . $row["image_name"];
-                ?>
     <img class="img-fluid home_image" src="<?php echo $imageURL; ?>" alt="" />
+
     <?php
-            break;
-                }?><?php
-            } else {?>
+        break;
+        } } else { ?>
+
     <img class="img-fluid home_image" src="uploads/Home.jpg" alt="" />
-    <?php }?>
+    <?php } ?>
+
+    <!-- intro title -->
     <div class="container title">
         <h1>Image Sharing</h1>
         <h2>Download any image</h2>
-        <div class="search_contain">
+        <div class="mt-3 search_contain">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Search any image"
                     aria-describedby="button-addon2" />
@@ -119,11 +108,8 @@ ob_start();
             </div>
         </div>
     </div>
+
 </div>
-
-
-
-
 
 
 <div class="py-5 container">
@@ -133,35 +119,37 @@ ob_start();
 <div class=" container big">
 
     <?php
-        // Include the database configuration file
-        include 'api/dbConfig.php';
-
         // Get images from the database
         $query = $db->query("SELECT * FROM images ORDER BY uploaded_on DESC");
-
         if ($query->num_rows > 0) {
-            ?>
-    <div class="images_list"><?php
+    ?>
+
+    <div class="images_list">
+        <?php
         while ($row = $query->fetch_assoc()) {
+
                 $imageURL = 'uploads/' . $row["image_name"];
                 $image_id = $row["id"];
                 $user_id_inner =$row["user_id"];
-                ?>
+        ?>
+
         <div class="contain">
+
             <img class="image" src="<?php echo $imageURL; ?>" alt="" />
+
+            <!-- like button -->
             <?php if(isset($_SESSION['user_id'])){ ?>
 
             <a <?php if (userLiked($image_id)): ?> class="like liked" <?php else: ?> class="like not_liked"
                 <?php endif ?> data-id="<?php echo $image_id ?>">
-                <i class="fa-solid fa-heart">
-
-                </i>
+                <i class="fa-solid fa-heart"> </i>
             </a>
 
             <span class="no_likes"><?php echo getLikes($image_id)  ?></span>
 
-            <?php } else{
-                ?>
+            <?php } 
+            else{ 
+            ?>
             <a class="like not-liked" data-id="<?php echo $image_id ?>">
                 <i class="fa-solid fa-heart">
 
@@ -170,12 +158,14 @@ ob_start();
 
             <span class="no_likes"><?php echo getLikes($image_id)  ?></span>
             <?php
-                }?>
+                }
+            ?>
 
 
-
+            <!-- download button -->
             <a class="down" href="<?php echo $imageURL ?>" download><i class="fa-solid fa-download"></i></a>
 
+            <!-- image profile -->
             <div class="image_profile">
                 <?php $query2 = $db->query("SELECT * FROM user where id = $user_id_inner");
 
@@ -197,31 +187,35 @@ ob_start();
                             <p class="pt-3"><?php echo $row2["name"];?></p>
                         </div>
                     </button>
+
                 </form>
                 <?php
-                            if (isset($_POST[$row2["name"]])) {
-                                if($_SESSION['user_id'] != $row2["id"]){
-                            //check if form was submitted
+                    if (isset($_POST[$row2["name"]])) {
+                        if($_SESSION['user_id'] != $row2["id"]){
                             $_SESSION["show_profile_id"] = $row2["id"];
-                                $_SESSION["show_profile_pic"]=$row2["profile_pic"];
-                                $_SESSION["show_user_name"]=$row2["name"];
-                                header('location: http://localhost/image_sharing_site/pages/users_profile.php');
-                            }
-                        else{
-                            header('location: http://localhost/image_sharing_site/pages/profile.php');
-                        }
+                            $_SESSION["show_profile_pic"]=$row2["profile_pic"];
+                            $_SESSION["show_user_name"]=$row2["name"];
+                            header('location: http://localhost/image_sharing_site/pages/users_profile.php');
                     }
-                            ?>
-                <?php } ?>
+                    else{
+                        header('location: http://localhost/image_sharing_site/pages/profile.php');
+                    }
+                    }
+                    }
+                ?>
 
             </div>
+
         </div>
 
         <?php }?>
     </div>
+
     <?php
-} else {?>
+            } else {
+        ?>
     <p>No image(s) found...</p>
+
     <?php }?>
 </div>
 
