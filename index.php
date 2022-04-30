@@ -30,6 +30,7 @@ include 'api/dbConfig.php';
 
             while ($row = $query->fetch_assoc()) {
                 $catagories = $row["catagories"];
+                $discription = $row["discription"];
         ?>
 
         <li class="nav-item">
@@ -42,6 +43,7 @@ include 'api/dbConfig.php';
             if (isset($_POST[$catagories])) {
                         
                 $_SESSION['catagory'] = $catagories;
+                $_SESSION['discription'] = $discription;
                 header('location: http://localhost/image_sharing_site/pages/catagories.php');
                 ob_end_flush();
             }

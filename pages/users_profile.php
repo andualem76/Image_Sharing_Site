@@ -120,7 +120,7 @@ $user_id = $_SESSION["show_profile_id"];
 
             <?php
                 while ($row = $query->fetch_assoc()) {
-                    $user_id =$row["user_id"];
+                    $user_id_inner =$row["user_id"];
 
                     if($_SESSION["selected_menu"] == "myphotos"){
             
@@ -134,7 +134,7 @@ $user_id = $_SESSION["show_profile_id"];
                         $query2 = $db->query("SELECT * FROM images where id = $imageid");
                         while ($row2 = $query2->fetch_assoc()) {
                         $imageURL = '../uploads/' . $row2["image_name"];
-                        $image_id = $row2["image_id"];
+                 
                         }
                 }
 
@@ -157,7 +157,7 @@ $user_id = $_SESSION["show_profile_id"];
                 <div class="image_profile">
 
                     <?php 
-                    $query2 = $db->query("SELECT * FROM user where id = $user_id");
+                    $query2 = $db->query("SELECT * FROM user where id = $user_id_inner");
                     while($row2 = $query2->fetch_assoc()){ 
                     ?>
                     <!-- user profile  -->

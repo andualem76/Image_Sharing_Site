@@ -24,6 +24,7 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="http://localhost/image_sharing_site/css/nav_styles.css" />
     <link rel="stylesheet" href="http://localhost/image_sharing_site/css/images_style.css" />
     <link rel="stylesheet" href="http://localhost/image_sharing_site/css/profile.css" />
+    <link rel="stylesheet" href="http://localhost/image_sharing_site/css/contact.css" />
     <!-- icons from fontawesome -->
     <script src="https://kit.fontawesome.com/28921f4de5.js" crossorigin="anonymous"></script>
 
@@ -55,13 +56,13 @@ if (isset($_SESSION['user_id'])) {
             <div class="collapse navbar-collapse" id="navmenu">
                 <ul class="navbar-nav ms-auto">
                     <li class="navbar-items">
-                        <a href="" class="nav-link">Home</a>
+                        <a href="http://localhost/image_sharing_site/index.php" class="nav-link">Home</a>
                     </li>
                     <li class="navbar-items">
-                        <a href="pages/login.php" class="nav-link">About</a>
+                        <a href="http://localhost/image_sharing_site/pages/about.php" class="nav-link">About</a>
                     </li>
                     <li class="navbar-items">
-                        <a href="" class="nav-link">Contact</a>
+                        <a href="http://localhost/image_sharing_site/pages/contact.php" class="nav-link">Contact</a>
                     </li>
                 </ul>
             </div>

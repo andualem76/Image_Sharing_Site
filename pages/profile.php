@@ -172,17 +172,18 @@ if (isset($_SESSION['selected_menu'])) {
         <div class="images_list">
             <?php
                 while ($row = $query->fetch_assoc()) {
-                        
+                    $user_id_inner =$row["user_id"];
+                    
                     if($_SESSION["selected_menu"] == "myphotos"){
                         $image_id = $row['id'];
                             $imageURL = '../uploads/' . $row["image_name"];
-                            $user_id_inner =$row["user_id"];
+                            
                     } else{
                             $image_id = $row['image_id'];
                             $query2 = $db->query("SELECT * FROM images where id = $image_id");
                         while ($row2 = $query2->fetch_assoc()) {
                             $imageURL = '../uploads/' . $row2["image_name"];
-                            $user_id_inner =$row2["user_id"];
+                            
                         }
                 }
 
