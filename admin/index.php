@@ -1,4 +1,6 @@
 <?php 
+session_start();
+ob_start();
 
 if (isset($_SESSION['user_id'])) {
     //set our user id globally to all pages 
@@ -7,6 +9,14 @@ if (isset($_SESSION['user_id'])) {
     $user_id = 0; 
     }
 
+include 'C:\xampp\htdocs\Image_Sharing_Site\api\dbConfig.php';
+
+
+if (isset($_SESSION['admin'])) {
+
+}else{
+    header('location: http://localhost/image_sharing_site/admin/login.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +42,8 @@ if (isset($_SESSION['user_id'])) {
 
 
 <body>
+
+
     <!-- navigation section -->
     <nav class="navbar navbar-expand-md bg-light navbar-light">
 
@@ -51,15 +63,15 @@ if (isset($_SESSION['user_id'])) {
                         <a href="http://localhost/image_sharing_site/admin/index.php" class="nav-link">catagories</a>
                     </li>
                     <li class="navbar-items">
-                        <a href="http://localhost/image_sharing_site/pages/admin/images.php" class="nav-link">images</a>
+                        <a href="http://localhost/image_sharing_site/admin/images.php" class="nav-link">images</a>
                     </li>
                     <li class="navbar-items">
-                        <a href="http://localhost/image_sharing_site/pages/admin/users.php" class="nav-link">users</a>
+                        <a href="http://localhost/image_sharing_site/admin/users.php" class="nav-link">users</a>
                     </li>
                 </ul>
             </div>
             <!-- account picture based on user login or not -->
-            <label for="admin" style="margin-right: 10px">ADMIN </label>
+            <label for="admin" style="margin-right: 10px  color: red;">ADMIN </label>
             <a id="admin" href="">
                 <img class="user_profile" src="http://localhost/image_sharing_site/images/admin.jpg" alt="" />
             </a>
@@ -68,22 +80,45 @@ if (isset($_SESSION['user_id'])) {
 
     </nav>
 
+    <div class="container notify_upload pt-4 ">
 
+        <?php
+            if (isset($_SESSION['success_message'])) {
+            ?>
+        <p class=<?php echo $_SESSION['color']; ?>>
+            <?php echo $_SESSION['success_message']; ?>
+        </p>
+        <?php unset($_SESSION['success_message']);
+            }
+            ?>
+
+    </div>
 
     <div class="container">
-        <form class='col-6 pt-5'>
+        <form method='post' class='col-6 pt-5'>
             <div class="form-group">
                 <label for="exampleInputEmail1">Name</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input name="username" type="username" class="form-control" id="exampleInputEmail1"
+                    aria-describedby="emailHelp">
 
             </div>
             <div class="form-group pt-3">
                 <label for="exampleInputPassword1">Discription</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <input name="discription" type="text" class="form-control" id="exampleInputPassword1">
             </div>
 
-            <button type="submit" class="mt-3 btn btn-primary">Submit</button>
+            <button name="submit" type="submit" class="mt-3 btn btn-primary">Add Catagory</button>
         </form>
+        <?php
+        if (isset($_POST['submit'])) {
+                $username = $_POST['username'];
+                $discription = $_POST['discription'];
+                $INSERT = "INSERT INTO catagories (catagories, discription) VALUES('$username', '$discription')";
+                mysqli_query($db, $INSERT);
+                header('location: http://localhost/image_sharing_site/admin/index.php');
+                ob_end_flush();
+            }
+            ?>
 
     </div>
 
@@ -92,34 +127,48 @@ if (isset($_SESSION['user_id'])) {
     <div class="container pt-5">
 
         <ul class="list-style-none">
-            <li class="d-flex no-block card-body justify-content-between">
-                <div class="d-flex no-block">
-                    <h1 style="margin-right: 20px">1</h1>
-                    <div> <a href="#" class="m-b-0 font-medium p-0" data-abc="true">Nature</a>
-                        <br><span class="text-muted display-block">A new version 2.5 has been released.
-                        </span>
-                    </div>
-                </div>
-                <div class="ml-auto">
-                    <div class="text-right">
-                        <a class="btn btn-danger">Delete</a>
-                    </div>
-                </div>
-            </li>
-            <li class="d-flex no-block card-body border-top justify-content-between">
-                <div class="d-flex no-block">
-                    <h1 style="margin-right: 20px">2</h1>
-                    <div> <a href="#" class="m-b-0 font-medium p-0" data-abc="true">Wallpaper</a>
-                        <br><span class="text-muted">AAA has invested $2M in MMM. we are happy to
-                            working forward with AAA.</span>
-                    </div>
-                </div>
 
-                <div class="justify-item-right">
-                    <a class="btn btn-danger">Delete</a>
-                </div>
 
-            </li>
+
+            <?php
+                        // Get catagories from the database
+                        $query = $db->query("SELECT * FROM catagories");
+                
+                        if ($query->num_rows > 0) {
+                        $num = 1;
+                        while ($row = $query->fetch_assoc()) {
+                            $name = $row['catagories'];
+                            $discription = $row['discription'];
+                ?>
+
+            <form method="post">
+                <li class="d-flex no-block card-body justify-content-between">
+                    <div class="d-flex no-block">
+                        <h1 style="margin-right: 20px"><?php echo $num ?></h1>
+                        <div> <a href="#" class="m-b-0 font-medium p-0" data-abc="true"><?php echo $name ?></a>
+                            <br><span class="text-muted display-block"><?php echo $discription ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ml-auto">
+                        <div class="text-right">
+                            <input type="submit" name="<?php echo $name ?>" class="btn btn-danger" value='Delete'>
+                        </div>
+                    </div>
+                </li>
+            </form>
+            <?php
+            if (isset($_POST[$name])) {
+                $query2 = $db->query("DELETE FROM catagories WHERE catagories = '$name'");      
+            
+                header('location: http://localhost/image_sharing_site/admin/index.php');
+                ob_end_flush();
+            }
+            ?>
+
+            <?php $num = $num + 1;} }?>
+
 
         </ul>
     </div>

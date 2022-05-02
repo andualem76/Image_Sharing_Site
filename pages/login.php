@@ -62,8 +62,6 @@
                                 </div>
                             </div>
 
-                            <a href="#l" class="forgot-link float-right text-primary">Forgot
-                                password?</a>
 
 
                             <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 pt-4 pb-3">

@@ -9,7 +9,8 @@ if (isset($_POST["submit"])) {
     //delete user from database
     $user_id = $_SESSION['user_id'];
     $insert = $db->query("DELETE FROM user WHERE id = $user_id;");
-
+    $db->query("DELETE FROM images WHERE user_id = $user_id;");
+    $db->query("DELETE FROM liked_images WHERE user_id = $user_id;");
     if ($insert) {
 
         $_SESSION['message'] = "User has been Deleted successfully.";

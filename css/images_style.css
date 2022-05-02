@@ -113,3 +113,11 @@ body{
 }
 
 
+/* admin style */
+
+.admin_image{
+    width: 150px;
+    height: 160px;
+    border-radius: 4px;
+    
+}

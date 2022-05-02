@@ -19,7 +19,19 @@
 
 <body>
 
+    <div class="container notify_upload pt-4 ">
 
+        <?php
+                if (isset($_SESSION['success_message'])) {
+                ?>
+        <p class=<?php echo $_SESSION['color']; ?>>
+            <?php echo $_SESSION['success_message']; ?>
+        </p>
+        <?php unset($_SESSION['success_message']);
+                }
+                ?>
+
+    </div>
     <!-- form -->
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -27,15 +39,15 @@
                 <div class="vh-100 row justify-content-center">
                     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1 align-self-center">
 
-                        <p class="text-start h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Admin Login</p>
+                        <p class="text-start h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 text-danger">Admin Login</p>
                         <form class="mx-1 mx-md-4" method="POST"
-                            action="http://localhost\Image_Sharing_Site\api\login_api.php">
+                            action="http://localhost\Image_Sharing_Site\admin/api/login_api.php">
                             <!-- email -->
                             <div class="d-flex flex-row align-items-center mb-4">
                                 <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                 <div class="form-outline flex-fill mb-0">
                                     <label class="form-label" for="form3Example3c">Username</label>
-                                    <input type="name" id="form3Example3c" class="form-control" name="email" />
+                                    <input type="name" id="form3Example3c" class="form-control" name="username" />
 
                                 </div>
                             </div>

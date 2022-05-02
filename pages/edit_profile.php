@@ -6,13 +6,13 @@ include "../components/nav.php"
 
 <div class="container notify_upload pt-4 ">
     <?php
-        if (isset($_SESSION['upload'])) {
+        if (isset($_SESSION['message'])) {
     ?>
     <p class=<?php echo $_SESSION['color']; ?>>
-        <?php echo $_SESSION['upload']; ?>
+        <?php echo $_SESSION['message']; ?>
     </p>
 
-    <?php unset($_SESSION['upload']);
+    <?php unset($_SESSION['message']);
         }
     ?>
 </div>

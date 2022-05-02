@@ -18,7 +18,18 @@ if (isset($_SESSION['selected_menu'])) {
     $_SESSION['selected_menu'] ="myphotos";
 }
 ?>
+<div class="container notify_upload pt-4 ">
+    <?php
+        if (isset($_SESSION['message'])) {
+    ?>
+    <p class=<?php echo $_SESSION['color']; ?>>
+        <?php echo $_SESSION['message']; ?>
+    </p>
 
+    <?php unset($_SESSION['message']);
+        }
+    ?>
+</div>
 <div class="container">
     <!--  profile and upload section-->
     <div class="row">
@@ -161,33 +172,95 @@ if (isset($_SESSION['selected_menu'])) {
     <div class="container big pt-3">
         <?php
                 // Get images from the database
-                if($_SESSION["selected_menu"] == "myphotos"){
+        if($_SESSION["selected_menu"] == "myphotos"){
                     $query = $db->query("SELECT * FROM images where user_id = $user_id ORDER BY uploaded_on DESC ");
                 }else{
                     $query = $db->query("SELECT * FROM liked_images where user_id = $user_id");
                 }
                 
-                if ($query->num_rows > 0) {
+        if ($query->num_rows > 0) {
                 ?>
-        <div class="images_list">
-            <?php
-                while ($row = $query->fetch_assoc()) {
-                    $user_id_inner =$row["user_id"];
-                    
-                    if($_SESSION["selected_menu"] == "myphotos"){
-                        $image_id = $row['id'];
-                            $imageURL = '../uploads/' . $row["image_name"];
-                            
-                    } else{
-                            $image_id = $row['image_id'];
-                            $query2 = $db->query("SELECT * FROM images where id = $image_id");
-                        while ($row2 = $query2->fetch_assoc()) {
-                            $imageURL = '../uploads/' . $row2["image_name"];
-                            
-                        }
-                }
 
+        <?php
+            if($_SESSION["selected_menu"] == "myphotos"){
+                $num = 1;
+        ?>
+        <div class="container ">
+            <div class="mt-5">
+                <ul class="list-style-none">
+                    <form method="post">
+                        <?php
+                while ($row = $query->fetch_assoc()) {
+                    $image_id = $row['id'];
+                    $imageURL = '../uploads/' . $row["image_name"];
+                    $catagory = $row['catagory'];
+                    $image_name = $row['image_name'];
+                    $upload_date = $row['uploaded_on']
                 ?>
+
+                        <li class="d-flex no-block card-body justify-content-between">
+                            <div class="d-flex no-block">
+                                <h1 style="margin-right: 20px"><?php echo $num ?></h1>
+                                <img class="admin_image mx-3" src="<?php echo $imageURL?>" alt="">
+                                <div> <a href="#" class="m-b-0 font-medium p-0"
+                                        data-abc="true"><?php echo $image_name ?></a>
+                                    <br><span class="text-muted display-block"><?php echo $catagory ?>
+                                    </span><br><span class="text-muted display-block"><?php echo $upload_date ?>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="ml-auto">
+
+                                <a class="btn btn-primary" href="<?php echo $imageURL ?>" download>Download</a>
+
+
+                                <input type="submit" name="<?php echo $image_id ?>" class="btn btn-danger"
+                                    value='Delete'>
+
+                            </div>
+                        </li>
+
+                        <?php
+                      $num = $num + 1;
+                      }
+                    ?>
+                    </form>
+
+
+
+                    <?php
+                        if (isset($_POST[$image_id])) {
+            
+                            $query2 = $db->query("DELETE FROM images WHERE id = $image_id");
+                            header('location: http://localhost/image_sharing_site/pages/profile.php');
+                            ob_end_flush();
+                        }
+            
+                      
+                    ?>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <?php
+
+
+            }else{
+
+                while ($row = $query->fetch_assoc()) {
+                
+                $user_id_inner =$row["user_id"];
+                $image_id = $row['image_id'];
+                $query2 = $db->query("SELECT * FROM images where id = $image_id");
+                
+                while ($row2 = $query2->fetch_assoc()) {
+                $imageURL = '../uploads/' . $row2["image_name"];
+                }
+        
+            ?>
+        <div class="images_list mt-3">
             <!-- image list -->
             <div class="contain">
                 <img class="image" src="<?php echo $imageURL; ?>" alt="" />
@@ -245,16 +318,21 @@ if (isset($_SESSION['selected_menu'])) {
 
             </div>
 
-            <?php }?>
 
 
         </div>
+
         <?php
-        } else { ?>
+
+        }
+    }
+                
+        }else{ ?>
 
         <p>No image(s) found...</p>
 
-        <?php }?>
+        <?php } ?>
+
 
     </div>
 
