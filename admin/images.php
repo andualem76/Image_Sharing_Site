@@ -65,7 +65,7 @@ include 'C:\xampp\htdocs\Image_Sharing_Site\api\dbConfig.php';
                 </ul>
             </div>
             <!-- account picture based on user login or not -->
-            <label for="admin" style="margin-right: 10px  color: red;">ADMIN </label>
+            <label for="admin" style="margin-right: 10px;  color: red;">ADMIN </label>
             <a id="admin" href="">
                 <img class="user_profile" src="http://localhost/image_sharing_site/images/admin.jpg" alt="" />
             </a>
@@ -121,8 +121,9 @@ include 'C:\xampp\htdocs\Image_Sharing_Site\api\dbConfig.php';
                 <li class="d-flex no-block card-body justify-content-between">
                     <div class="d-flex no-block">
                         <h1 style="margin-right: 20px"><?php echo $num ?></h1>
-                        <img class="admin_image mx-3" src="../uploads\<?php echo $image_name?>" alt="">
-                        <div> <a href="#" class="m-b-0 font-medium p-0" data-abc="true"><?php echo $image_name ?></a>
+                        <img class="admin_image_list mx-3" src="../uploads\<?php echo $image_name?>" alt="">
+                        <div>
+                            <p class="mb-0 font-medium p-0"><?php echo $image_name ?></p>
                             <br><span class="text-muted display-block"><?php echo $catagory ?>
                             </span><br><span class="text-muted display-block"><?php echo $upload_date ?>
                             </span>

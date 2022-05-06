@@ -137,7 +137,7 @@ include 'api/dbConfig.php';
 
         <div class="contain">
 
-            <img class="image" src="<?php echo $imageURL; ?>" alt="" />
+            <img class="image new" src="<?php echo $imageURL; ?>" alt="" />
 
             <!-- like button -->
             <?php if(isset($_SESSION['user_id'])){ ?>

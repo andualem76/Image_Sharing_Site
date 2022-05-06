@@ -71,7 +71,7 @@ if (isset($_SESSION['admin'])) {
                 </ul>
             </div>
             <!-- account picture based on user login or not -->
-            <label for="admin" style="margin-right: 10px  color: red;">ADMIN </label>
+            <label for="admin" style="margin-right: 10px;  color: red;">ADMIN </label>
             <a id="admin" href="">
                 <img class="user_profile" src="http://localhost/image_sharing_site/images/admin.jpg" alt="" />
             </a>
@@ -145,7 +145,8 @@ if (isset($_SESSION['admin'])) {
                 <li class="d-flex no-block card-body justify-content-between">
                     <div class="d-flex no-block">
                         <h1 style="margin-right: 20px"><?php echo $num ?></h1>
-                        <div> <a href="#" class="m-b-0 font-medium p-0" data-abc="true"><?php echo $name ?></a>
+                        <div>
+                            <p class="mb-0 font-medium p-0" data-abc="true"><?php echo $name ?></p>
                             <br><span class="text-muted display-block"><?php echo $discription ?>
                             </span>
                         </div>

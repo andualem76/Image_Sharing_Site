@@ -116,8 +116,14 @@ body{
 /* admin style */
 
 .admin_image{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    
+}
+.admin_image_list{
     width: 150px;
-    height: 160px;
-    border-radius: 4px;
+    height: 150px;
+    border-radius: 5px;
     
 }
