@@ -59,7 +59,7 @@ include "../components/nav.php"
                     <div class="row mt-3">
 
                         <p> Change profile picture:</p>
-                        <input type="file" class="mb-2" name="file">
+                        <input type="file" class="mb-2 form-control w-50" name="file">
                         <div class="mt-2 text-end"><input type="submit" class="btn btn-success" name="submit"
                                 value="Update Profile Picture">
                         </div>

@@ -106,3 +106,15 @@ navbar.forEach(element => {
         
     })
 });
+
+popup = document.querySelectorAll(".container .contain img")
+console.log(popup)
+popup.forEach(element => {
+    element.addEventListener("click", function(){
+        document.querySelector('.image_popup').style.display = 'block';
+        document.querySelector('.image_popup img').src = element.getAttribute('src');
+    })
+});
+document.querySelector('.image_popup i').onclick = () =>{
+    document.querySelector('.image_popup').style.display = 'none';
+}

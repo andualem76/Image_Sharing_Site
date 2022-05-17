@@ -4,7 +4,7 @@ include "../components/nav.php";
 include '../api/dbConfig.php';
 
 $catagory= $_POST['catagory'];
-
+$discription = $_POST['discription'];
 // File upload path
 $targetDir = "../uploads/";
 
@@ -20,7 +20,8 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
         // Upload file to server
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
             // Insert image file name into database
-            $insert = $db->query("INSERT into images (user_id, image_name, catagory,uploaded_on) VALUES ($user_id,'" . $fileName . "', '$catagory', NOW() )");
+            $insert = $db->query("INSERT into images (user_id, image_name, catagory, discription, uploaded_on)
+             VALUES ($user_id,'" . $fileName . "', '$catagory', '$discription',NOW() )");
 
             if ($insert) {
                 $_SESSION['message'] = "The file " . $fileName . " has been uploaded successfully.";

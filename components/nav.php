@@ -41,9 +41,10 @@ if (isset($_SESSION['user_id'])) {
             </a>
             <!-- search tab -->
             <div class="search-input">
-                <form class="d-flex">
-                    <input class="form-control me-lg-1" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success" type="submit">
+                <form method="post" action="http://localhost/image_sharing_site/pages/image_search.php" class="d-flex">
+                    <input name="search" class="form-control me-lg-1" type="search" placeholder="Search"
+                        aria-label="Search" />
+                    <button name="submit" class="btn btn-outline-success" type="submit">
                         Search
                     </button>
                 </form>

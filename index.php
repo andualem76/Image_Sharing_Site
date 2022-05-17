@@ -101,13 +101,14 @@ include 'api/dbConfig.php';
         <h1>Image Sharing</h1>
         <h2>Download any image</h2>
         <div class="mt-3 search_contain">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search any image"
-                    aria-describedby="button-addon2" />
-                <button class="btn btn-success" type="button" id="button-addon2">
+
+            <form method="post" action="http://localhost/image_sharing_site/pages/image_search.php" class="d-flex">
+                <input name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" />
+                <button name="submit" class="btn btn-success" type="submit">
                     Search
                 </button>
-            </div>
+            </form>
+
         </div>
     </div>
 
@@ -118,7 +119,7 @@ include 'api/dbConfig.php';
     <h2>Browse Uploaded image</h2>
 </div>
 
-<div class=" container big">
+<div class="container big">
 
     <?php
         // Get images from the database
@@ -140,6 +141,7 @@ include 'api/dbConfig.php';
             <img class="image new" src="<?php echo $imageURL; ?>" alt="" />
 
             <!-- like button -->
+            <!-- check if someone is logged in -->
             <?php if(isset($_SESSION['user_id'])){ ?>
 
             <a <?php if (userLiked($image_id)): ?> class="like liked" <?php else: ?> class="like not_liked"
@@ -197,6 +199,7 @@ include 'api/dbConfig.php';
                             $_SESSION["show_profile_id"] = $row2["id"];
                             $_SESSION["show_profile_pic"]=$row2["profile_pic"];
                             $_SESSION["show_user_name"]=$row2["name"];
+                            $_SESSION["show_user_email"]=$row2["email"];
                             header('location: http://localhost/image_sharing_site/pages/users_profile.php');
                     }
                     else{
@@ -205,12 +208,18 @@ include 'api/dbConfig.php';
                     }
                     }
                 ?>
+                <!-- popup image -->
 
             </div>
 
         </div>
 
         <?php }?>
+    </div>
+    <div class="image_popup">
+        <i class="fa-solid fa-x"></i>
+        <img src="uploads\bernd-dittrich-fIP7BUW91cc-unsplash.jpg" alt="">
+
     </div>
 
     <?php

@@ -74,14 +74,14 @@ if (isset($_SESSION['selected_menu'])) {
                         </div>
 
 
-                        <div class="container py-4 upfrm">
+                        <div class="col-6 py-4 upfrm">
 
                             <p> Select Image File to Upload:</p>
                             <form action="" method="POST" enctype="multipart/form-data">
 
-                                <input type="file" class="mb-2" name="file"><br>
+                                <input type="file" class="mb-2 form-control" name="file"><br>
                                 <label for="cars" class="mb-3">Catagory:</label>
-                                <select id="cars" class="mb-3" name="catagory">
+                                <select id="cars" class="mb-3 form-select" name="catagory">
 
 
                                     <?php
@@ -100,7 +100,12 @@ if (isset($_SESSION['selected_menu'])) {
                                     <?php } }?>
 
                                 </select><br>
-                                <input type="submit" name="submit" value="Upload Image">
+                                <div class="form-group mb-4">
+                                    <label for="exampleFormControlTextarea1">Discription</label>
+                                    <textarea name="discription" class="form-control" id="exampleFormControlTextarea1"
+                                        rows="3" placeholder="Discribe your image clearly"></textarea>
+                                </div>
+                                <input type="submit" class="btn btn-success" name="submit" value="Upload Image">
 
                             </form>
 
@@ -201,7 +206,7 @@ if (isset($_SESSION['selected_menu'])) {
                         <li class="d-flex no-block card-body justify-content-between">
                             <div class="d-flex no-block">
                                 <h1 style="margin-right: 20px"><?php echo $num ?></h1>
-                                <img class="admin_image mx-3" src="<?php echo $imageURL?>" alt="">
+                                <img class="admin_image_list mx-3" src="<?php echo $imageURL?>" alt="">
                                 <div> <a href="#" class="m-b-0 font-medium p-0"
                                         data-abc="true"><?php echo $image_name ?></a>
                                     <br><span class="text-muted display-block"><?php echo $catagory ?>
@@ -322,12 +327,14 @@ if (isset($_SESSION['selected_menu'])) {
 
         </div>
 
-        <?php
+        <div class="image_popup">
+            <i class="fa-solid fa-x"></i>
+            <img src="uploads\bernd-dittrich-fIP7BUW91cc-unsplash.jpg" alt="">
 
-        }
-    }
-                
-        }else{ ?>
+        </div>
+        <?php
+            }
+        } }else{ ?>
 
         <p>No image(s) found...</p>
 

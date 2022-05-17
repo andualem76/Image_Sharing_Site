@@ -11,14 +11,10 @@ if (isset($_SESSION['user_id'])) {
 include '../api/like_api.php';
 include '../components/nav.php';
 include '../api/dbConfig.php';
-       
-if (isset($_SESSION['selected_menu'])) {
 
-} else{
-    $_SESSION['selected_menu'] ="myphotos";
-}
 
-$user_id = $_SESSION["show_profile_id"];
+$user_profile_id = $_SESSION["show_profile_id"];
+$user_profile_email = $_SESSION["show_user_email"]
 ?>
 
 <div class="container">
@@ -44,50 +40,28 @@ $user_id = $_SESSION["show_profile_id"];
                             <div class="profile-header-info">
                                 <h4 class="m-t-10 m-b-5"><?php echo $_SESSION['show_user_name']?></h4>
                                 <p class="m-b-10">photographer</p>
-                                <a href="" class="btn btn-sm btn-info mb-2">contact</a>
+
+                                <form action="mailto:<?php echo $user_profile_email ?>" method="POST"
+                                    enctype="multipart/form-data">
+                                    <input type="submit" class="btn btn-sm btn-info mb-2" value="Contact">
+
+                                </form>
                             </div>
 
                         </div>
                         <!-- BEGIN profile-header-tab -->
 
-                        <div>
+                        <div class="catagories">
                             <ul class="nav nav-tabs">
                                 <!-- menu list -->
                                 <li class="nav-item">
-                                    <a class="nav-link <?php if ("myphotos" == $_SESSION['selected_menu']) { echo "active"; } ?>"
-                                        aria-current="page">
+                                    <a class="nav-link active" aria-current="page">
 
                                         <form method="post">
-                                            <input type="submit" name="myphotos" class=" submit_btn" value="My Photos">
+                                            <input type="submit" name="myphotos" class=" submit_btn" value="Photos">
                                         </form>
                                     </a>
                                 </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link <?php if ("likedphotos" == $_SESSION['selected_menu']) { echo "active"; } ?>"
-                                        aria-current="page">
-
-                                        <form method="post">
-                                            <input type="submit" name="likedphotos" class=" submit_btn"
-                                                value="Liked Photos">
-                                        </form>
-                                    </a>
-                                </li>
-
-                                <?php
-                                    if (isset($_POST["myphotos"])) {
-                                    
-                                        $_SESSION['selected_menu'] = "myphotos";
-                                        header('location: http://localhost/image_sharing_site/pages/users_profile.php');
-                                        ob_end_flush();
-                                    }
-                                    if (isset($_POST["likedphotos"])) {
-                                        
-                                        $_SESSION['selected_menu'] = "likedphotos";
-                                        header('location: http://localhost/image_sharing_site/pages/users_profile.php');
-                                        ob_end_flush();
-                                                }
-                                ?>
 
                             </ul>
                             <!-- END profile-header-tab -->
@@ -100,19 +74,13 @@ $user_id = $_SESSION["show_profile_id"];
     </div>
 
 
-    <div class="container big pt-3">
+    <div class="container big mt-5">
 
         <?php
 
-
-            // Get images from the database
-            if($_SESSION["selected_menu"] == "myphotos"){
-                $query = $db->query("SELECT * FROM images where user_id = $user_id ORDER BY uploaded_on DESC ");
-            }else{
-                $query = $db->query("SELECT * FROM liked_images where user_id = $user_id");
-            }
-
-            if ($query->num_rows > 0) { 
+        $query = $db->query("SELECT * FROM images where user_id = $user_profile_id ORDER BY uploaded_on DESC ");
+           
+        if ($query->num_rows > 0) { 
         
         ?>
 
@@ -120,24 +88,11 @@ $user_id = $_SESSION["show_profile_id"];
 
             <?php
                 while ($row = $query->fetch_assoc()) {
+                    
                     $user_id_inner =$row["user_id"];
-
-                    if($_SESSION["selected_menu"] == "myphotos"){
-            
                     $imageURL = '../uploads/' . $row["image_name"];
                     $image_id = $row["id"];
                     
-
-                }else{
-                
-                        $imageid = $row['image_id'];
-                        $query2 = $db->query("SELECT * FROM images where id = $imageid");
-                        while ($row2 = $query2->fetch_assoc()) {
-                        $imageURL = '../uploads/' . $row2["image_name"];
-                 
-                        }
-                }
-
                 ?>
 
             <div class="contain">
@@ -161,8 +116,8 @@ $user_id = $_SESSION["show_profile_id"];
                     while($row2 = $query2->fetch_assoc()){ 
                     ?>
                     <!-- user profile  -->
-                    <form action="" method="POST">
-                        <button style="
+
+                    <button style="
                                 background: none;
                                 color: inherit;
                                 border: none;
@@ -171,43 +126,34 @@ $user_id = $_SESSION["show_profile_id"];
                                 cursor: pointer;
                                 outline: inherit;
                                     " name="<?php echo $row2["name"];?>">
-                            <div class="block">
-                                <img src="http://localhost/image_sharing_site/uploads/<?php echo $row2["profile_pic"];?>"
-                                    alt="">
-                                <p class="pt-3"><?php echo $row2["name"];?></p>
-                            </div>
-                        </button>
+                        <div class="block">
+                            <img src="http://localhost/image_sharing_site/uploads/<?php echo $row2["profile_pic"];?>"
+                                alt="">
+                            <p class="pt-3"><?php echo $row2["name"];?></p>
+                        </div>
+                    </button>
 
-                    </form>
-
-                    <?php
-                    if (isset($_POST[$row2["name"]])) {
-                        if($_SESSION['user_id'] != $row2["id"]){
-                        
-                            $_SESSION["show_profile_id"] = $row2["id"];
-                            $_SESSION["show_profile_pic"]=$row2["profile_pic"];
-                            $_SESSION["show_user_name"]=$row2["name"];
-                            header('location: http://localhost/image_sharing_site/pages/users_profile.php');
-                        }
-                    else{
-                        header('location: http://localhost/image_sharing_site/pages/profile.php');
-                    }
-                    }
-                    } 
-                    ?>
 
                 </div>
             </div>
 
-            <?php } ?>
+            <?php }} ?>
 
         </div>
+
+
 
         <?php
             } else {
         ?>
         <p>No image(s) found...</p>
         <?php }?>
+
+        <div class="image_popup">
+            <i class="fa-solid fa-x"></i>
+            <img src="../uploads\bernd-dittrich-fIP7BUW91cc-unsplash.jpg" alt="">
+
+        </div>
     </div>
 
 

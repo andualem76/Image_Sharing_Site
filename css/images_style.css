@@ -26,6 +26,7 @@ body{
     height: 100%;
     border-radius: 15px;
     object-fit:cover;
+    cursor: pointer;
 }
 .contain .image:hover{
     scale: 1.02;  
@@ -126,4 +127,37 @@ body{
     height: 150px;
     border-radius: 5px;
     
+}
+/* popup menu */
+
+.container .image_popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgb(0, 0, 0, .9);
+    height: 100%;
+    width: 100%;
+    z-index:100;
+    display: none;
+}
+.container .image_popup i{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: bolder;
+    color: #fff;
+    cursor: pointer;
+    z-index: 100;
+}
+.container .image_popup img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 850px;
+    object-fit: cover;
+}
+.contain .like , .down{
+    cursor: pointer;
 }

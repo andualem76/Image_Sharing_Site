@@ -16,57 +16,12 @@ include '../api/dbConfig.php';
 
 ?>
 
-<!-- catagories menu items -->
-<div class="container catagories">
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link disabled">Catagories</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="http://localhost/image_sharing_site/index.php">
-                <p class="m-0 text-success">Collections</p>
-            </a>
-        </li>
-        <?php
-            //get catagories from database
-            $query = $db->query("SELECT * FROM catagories");
-            
-                while ($row = $query->fetch_assoc()) {
-                    $catagories = $row["catagories"];
-                    $discription = $row["discription"];
-        ?>
-
-        <!-- generated catagory list from database -->
-        <li class="nav-item">
-            <a class="nav-link <?php if ($catagories == $_SESSION['catagory']) { echo "active"; } ?>"
-                aria-current="page">
-
-                <form method="post">
-                    <input type="submit" name="<?php echo $catagories ?>" class="submit_btn"
-                        value=<?php echo $catagories ?>>
-                </form>
-
-                <?php
-                if (isset($_POST[$catagories])) {
-                //check if form was submitted
-                    $_SESSION['catagory'] = $catagories;
-                    $_SESSION['discription'] = $discription;
-                    header('location: http://localhost/image_sharing_site/pages/catagories.php');
-                    ob_end_flush();
-                }
-                ?>
-            </a>
-        </li>
-        <?php } ?>
-
-    </ul>
-</div>
 
 <!-- title and discription -->
 <div class="container">
     <div class=" text-start pt-4 col-5 ">
-        <h1><?php echo $_SESSION['catagory']; ?></h1>
-        <p><?php echo $_SESSION['discription']; ?></p>
+        <h1>Search Results for <?php echo $_POST['search']; ?></h1>
+
     </div>
 </div>
 
@@ -76,10 +31,10 @@ include '../api/dbConfig.php';
 <div class="container big mt-5">
 
     <?php
-        $catagory = $_SESSION['catagory'];
+        $search = $_POST['search'];
 
         // Get images from the database
-        $query = $db->query("SELECT * FROM images WHERE catagory='$catagory' ORDER BY uploaded_on DESC");
+        $query = $db->query("SELECT * FROM `images` WHERE MATCH(discription) AGAINST('$search') ");
 
         if ($query->num_rows > 0) {
     ?>
@@ -173,11 +128,7 @@ include '../api/dbConfig.php';
 
         <?php } ?>
     </div>
-    <div class="image_popup">
-        <i class="fa-solid fa-x"></i>
-        <img src="uploads\bernd-dittrich-fIP7BUW91cc-unsplash.jpg" alt="">
 
-    </div>
     <?php
         } else { ?>
     <p>No image(s) found...</p>
