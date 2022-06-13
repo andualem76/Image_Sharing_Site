@@ -113,6 +113,7 @@ if (isset($_SESSION['admin'])) {
         if (isset($_POST['submit'])) {
                 $username = $_POST['username'];
                 $discription = $_POST['discription'];
+                
                 $INSERT = "INSERT INTO catagories (catagories, discription) VALUES('$username', '$discription')";
                 mysqli_query($db, $INSERT);
                 header('location: http://localhost/image_sharing_site/admin/index.php');

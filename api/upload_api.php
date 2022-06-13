@@ -15,7 +15,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
     $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 
     // Allow certain file formats
-    $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf');
+    $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
     if (in_array($fileType, $allowTypes)) {
         // Upload file to server
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
@@ -43,7 +43,7 @@ if (isset($_POST["submit"]) && !empty($_FILES["file"]["name"])) {
            
         }
     } else {
-        $_SESSION['message'] =  'Sorry, only JPG, JPEG, PNG, GIF, & PDF files are allowed to upload.';
+        $_SESSION['message'] =  'Sorry, only JPG, JPEG, PNG & GIF files are allowed to upload.';
         $_SESSION['color'] = "notify_upload_red";
         header('location: http://localhost/image_sharing_site/pages/profile.php');
         ob_end_flush();

@@ -65,7 +65,7 @@ include 'C:\xampp\htdocs\Image_Sharing_Site\api\dbConfig.php';
                 </ul>
             </div>
             <!-- account picture based on user login or not -->
-            <label for="admin" style="margin-right: 10px; color: red;">ADMIN </label>
+            <label for="admin" style="margin-right: 10px;  color: red;">ADMIN </label>
             <a id="admin" href="">
                 <img class="user_profile" src="http://localhost/image_sharing_site/images/admin.jpg" alt="" />
             </a>
@@ -90,9 +90,11 @@ include 'C:\xampp\htdocs\Image_Sharing_Site\api\dbConfig.php';
 
     <div class="container">
         <div class="input-group mb-3">
-            <form method="post" action="http://localhost/image_sharing_site/admin/admin_user_search.php" class="d-flex">
-                <input name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" />
-                <button name="submit" class="btn btn-success" type="submit">
+
+            <form method="post" action="http://localhost/image_sharing_site/admin/admin_search.php" class="d-flex">
+                <input name="search" type="text" class="form-control" placeholder="Search any image"
+                    aria-describedby="button-addon2" />
+                <button name="submit" class="btn btn-success" type="button" id="button-addon2">
                     Search
                 </button>
             </form>
@@ -107,48 +109,49 @@ include 'C:\xampp\htdocs\Image_Sharing_Site\api\dbConfig.php';
 
 
             <?php
-                        // Get catagories from the database
-                        $query = $db->query("SELECT * FROM user");
-                
+                    $search = $_POST['search'];
+
+                    // Get images from the database
+                    $query = $db->query("SELECT * FROM `images` WHERE MATCH(discription) AGAINST('$search') ");
                         if ($query->num_rows > 0) {
                         $num = 1;
                         while ($row = $query->fetch_assoc()) {
-                            $user_id = $row['id'];
-                            $user_name = $row['name'];
-                            $email = $row['email'];
-                            $profile_pic = $row['profile_pic'];
-                            
+                            $image_id = $row['id'];
+                            $image_name = $row['image_name'];
+                            $catagory = $row['catagory'];
+                            $upload_date = $row['uploaded_on'];
                 ?>
 
             <form method="post">
                 <li class="d-flex no-block card-body justify-content-between">
                     <div class="d-flex no-block">
                         <h1 style="margin-right: 20px"><?php echo $num ?></h1>
-                        <img class="admin_image mx-3" src="../uploads\<?php echo $profile_pic?>" alt="">
-                        <div> <a href="#" class="m-b-0 font-medium p-0" data-abc="true"><?php echo $user_name ?></a>
-                            <br><span class="text-muted display-block"><?php echo $email ?>
+                        <img class="admin_image_list mx-3" src="../uploads\<?php echo $image_name?>" alt="">
+                        <div>
+                            <p class="mb-0 font-medium p-0"><?php echo $image_name ?></p>
+                            <br><span class="text-muted display-block"><?php echo $catagory ?>
+                            </span><br><span class="text-muted display-block"><?php echo $upload_date ?>
                             </span>
                         </div>
                     </div>
 
                     <div class="ml-auto">
                         <div class="text-right">
-                            <input type="submit" name="<?php echo $user_id ?>" class="btn btn-danger" value='Delete'>
+                            <input type="submit" name="<?php echo $image_id ?>" class="btn btn-danger" value='Delete'>
                         </div>
                     </div>
                 </li>
             </form>
             <?php
-            if (isset($_POST[$user_id])) {
+            if (isset($_POST[$image_id])) {
               
-                $query2 = $db->query("DELETE FROM user WHERE id = $user_id");
-                $query2 = $db->query("DELETE FROM images WHERE user_id = $user_id");
-                header('location: http://localhost/image_sharing_site/admin/users.php');
+                $query2 = $db->query("DELETE FROM images WHERE id = $image_id");
+                $query2 = $db->query("DELETE FROM liked_images WHERE image_id = $image_id");
+                header('location: http://localhost/image_sharing_site/admin/images.php');
                 ob_end_flush();
             }
-            ?>
-
-            <?php $num = $num + 1;} }?>
+           
+           $num = $num + 1;} }?>
 
 
         </ul>

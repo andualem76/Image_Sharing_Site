@@ -90,10 +90,12 @@ include 'C:\xampp\htdocs\Image_Sharing_Site\api\dbConfig.php';
 
     <div class="container">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Search any image" aria-describedby="button-addon2" />
-            <button class="btn btn-success" type="button" id="button-addon2">
-                Search
-            </button>
+            <form method="post" action="http://localhost/image_sharing_site/admin/admin_search.php" class="d-flex">
+                <input name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" />
+                <button name="submit" class="btn btn-success" type="submit">
+                    Search
+                </button>
+            </form>
         </div>
     </div>
 
@@ -141,6 +143,7 @@ include 'C:\xampp\htdocs\Image_Sharing_Site\api\dbConfig.php';
             if (isset($_POST[$image_id])) {
               
                 $query2 = $db->query("DELETE FROM images WHERE id = $image_id");
+                $query2 = $db->query("DELETE FROM liked_images WHERE image_id = $image_id");
                 header('location: http://localhost/image_sharing_site/admin/images.php');
                 ob_end_flush();
             }
